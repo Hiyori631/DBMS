@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+
+{% block title %}Submit Request - Citizen Portal{% endblock %}
+
+{% block content %}
+<!-- Top Bar -->
+<div class="bg-[#33272a] text-white py-2 px-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <span>Logged in as: {{ user_email }}</span>
+        </div>
+        <button onclick="logout()" class="px-4 py-1 bg-[#ff8ba7] text-[#33272a] font-semibold rounded hover:bg-[#ffc6c7] transition-colors">
+            Logout
+        </button>
+    </div>
+</div>
+
+<div class="min-h-screen bg-[#faeee7] p-6">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto border-2 border-[#ffc6c7]">
+        <div class="mb-6">
+            <a href="/citizen/dashboard" class="text-[#ff8ba7] hover:text-[#33272a] mb-4 inline-block font-semibold">
+                ← Back to Dashboard
+            </a>
+            <h2 class="mb-2 text-[#33272a]">Submit Assistance Request</h2>
+            <p class="text-[#594a4e]">
+                Please provide detailed information to help us prioritize and respond to your needs effectively.
+                Available for emergencies and ongoing support needs.
+            </p>
+        </div>
+
+        <form id="requestForm">
+            <!-- Personal Information -->
+            <div class="mb-6">
+                <h3 class="mb-4 flex items-center gap-2 text-[#33272a]">
+                    <i data-lucide="users" class="w-5 h-5 text-[#ff8ba7]"></i>
+                    Personal Information
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold">Full Name *</label>
+                        <input type="text" id="citizenName" required
+                            class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                            placeholder="Enter your full name" />
+                    </div>
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold">Phone Number *</label>
+                        <input type="tel" id="phone" required
+                            class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                            placeholder="+1-555-0000" />
+                    </div>
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold">Email Address *</label>
+                        <input type="email" id="email" required value="{{ user_email }}" readonly
+                            class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded bg-[#faeee7]" />
+                    </div>
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold">Number of People Affected *</label>
+                        <input type="number" id="peopleAffected" required min="1" value="1"
+                            class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]" />
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label class="block text-[#33272a] mb-2 flex items-center gap-2 font-semibold">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-[#ff8ba7]"></i>
+                        Address/Location *
+                    </label>
+                    <input type="text" id="address" required
+                        class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                        placeholder="Street address, district, landmark" />
+                </div>
+            </div>
+
+            <!-- Need Details -->
+            <div class="mb-6">
+                <h3 class="mb-4 flex items-center gap-2 text-[#33272a]">
+                    <i data-lucide="file-text" class="w-5 h-5 text-[#ff8ba7]"></i>
+                    Need Details
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold">Type of Need *</label>
+                        <select id="needType" required
+                            class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]">
+                            <option value="food">Food</option>
+                            <option value="shelter">Shelter</option>
+                            <option value="medical">Medical</option>
+                            <option value="water">Water</option>
+                            <option value="educational">Educational</option>
+                            <option value="mental-health">Mental Health</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="financial">Financial Assistance</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold">Severity Level *</label>
+                        <select id="severity" required
+                            class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]">
+                            <option value="critical">🔴 Critical - Life-threatening</option>
+                            <option value="urgent">🟠 Urgent - Needs attention within 24 hours</option>
+                            <option value="moderate" selected>🟡 Moderate - Important but not urgent</option>
+                            <option value="low">🔵 Low - Can wait a few days</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label class="block text-[#33272a] mb-2 font-semibold">Detailed Description *</label>
+                    <textarea id="description" required rows="4"
+                        class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                        placeholder="Please describe your situation in detail. Include what happened, what you need, and why it's urgent."></textarea>
+                </div>
+            </div>
+
+            <!-- Vulnerability Groups -->
+            <div class="mb-6">
+                <h3 class="mb-2 flex items-center gap-2 text-[#33272a]">
+                    <i data-lucide="alert-circle" class="w-5 h-5 text-[#ff8ba7]"></i>
+                    Vulnerability Information
+                </h3>
+                <p class="text-[#594a4e] mb-3">Select all that apply to help us prioritize your request:</p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <button type="button" onclick="toggleVulnerability('student', this)"
+                        class="p-3 border-2 border-[#ffc6c7] rounded hover:border-[#ff8ba7] transition-all text-left vulnerability-btn text-[#33272a]"
+                        data-group="student">
+                        Student
+                    </button>
+                    <button type="button" onclick="toggleVulnerability('children', this)"
+                        class="p-3 border-2 border-[#ffc6c7] rounded hover:border-[#ff8ba7] transition-all text-left vulnerability-btn text-[#33272a]"
+                        data-group="children">
+                        Children in household
+                    </button>
+                    <button type="button" onclick="toggleVulnerability('elderly', this)"
+                        class="p-3 border-2 border-[#ffc6c7] rounded hover:border-[#ff8ba7] transition-all text-left vulnerability-btn text-[#33272a]"
+                        data-group="elderly">
+                        Elderly (65+)
+                    </button>
+                    <button type="button" onclick="toggleVulnerability('disabled', this)"
+                        class="p-3 border-2 border-[#ffc6c7] rounded hover:border-[#ff8ba7] transition-all text-left vulnerability-btn text-[#33272a]"
+                        data-group="disabled">
+                        Person with disability
+                    </button>
+                    <button type="button" onclick="toggleVulnerability('pregnant', this)"
+                        class="p-3 border-2 border-[#ffc6c7] rounded hover:border-[#ff8ba7] transition-all text-left vulnerability-btn text-[#33272a]"
+                        data-group="pregnant">
+                        Pregnant woman
+                    </button>
+                </div>
+                
+                <div id="studentSection" class="mt-4" style="display: none;">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" id="isStudent" class="w-4 h-4" />
+                        <span class="text-[#33272a]">I am a student requesting educational support</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Student-Specific Section -->
+            <div id="educationalSection" class="mb-6 p-4 bg-[#faeee7] rounded-lg border-2 border-[#ffc6c7]" style="display: none;">
+                <h3 class="mb-3 text-[#33272a]">📚 Educational Needs (Student Section)</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold">Specific Educational Need</label>
+                        <select id="educationalNeedType"
+                            class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]">
+                            <option value="supplies">School Supplies & Textbooks</option>
+                            <option value="devices">Computer/Tablet/Device</option>
+                            <option value="internet">Internet Access</option>
+                            <option value="scholarship">Emergency Financial Aid/Scholarship</option>
+                            <option value="counseling">Academic/Mental Health Counseling</option>
+                            <option value="exam-support">Exam Support (urgent deadline)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold">Additional Details</label>
+                        <textarea id="educationalDetails" rows="3"
+                            class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                            placeholder="Describe how this affects your education and what specific help you need"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Circumstances -->
+            <div class="mb-6">
+                <label class="block text-[#33272a] mb-2 font-semibold">Special Circumstances (Optional)</label>
+                <textarea id="specialCircumstances" rows="3"
+                    class="w-full px-4 py-2 border-2 border-[#ffc6c7] rounded focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                    placeholder="Any additional information that might help prioritize your request (medical conditions, mobility issues, etc.)"></textarea>
+            </div>
+            <!-- Action Buttons -->
+            <div class="flex gap-4">
+                <a href="/citizen/dashboard"
+                    class="flex-1 px-6 py-3 border-2 border-[#ffc6c7] text-[#33272a] font-semibold rounded-lg hover:bg-[#faeee7] transition-colors text-center">
+                    Cancel
+                </a>
+                <button type="submit"
+                    class="flex-1 px-6 py-3 bg-[#ff8ba7] text-[#33272a] font-semibold rounded-lg hover:bg-[#ffc6c7] transition-colors">
+                    Submit Request
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    let selectedVulnerabilities = [];
+    
+    function logout() {
+        fetch('/api/logout', { method: 'POST' }).then(() => {
+            window.location.href = '/';
+        });
+    }
+    
+    function toggleVulnerability(group, btn) {
+        const index = selectedVulnerabilities.indexOf(group);
+        if (index > -1) {
+            selectedVulnerabilities.splice(index, 1);
+            btn.classList.remove('border-[#ff8ba7]', 'bg-[#ffc6c7]');
+            btn.classList.add('border-[#ffc6c7]');
+        } else {
+            selectedVulnerabilities.push(group);
+            btn.classList.remove('border-[#ffc6c7]');
+            btn.classList.add('border-[#ff8ba7]', 'bg-[#ffc6c7]');
+        }
+        
+        // Show student section if student is selected
+        if (group === 'student') {
+            document.getElementById('studentSection').style.display = 
+                selectedVulnerabilities.includes('student') ? 'block' : 'none';
+        }
+    }
+    
+    // Show educational section when both student checkbox and educational need type are selected
+    document.getElementById('isStudent')?.addEventListener('change', function() {
+        updateEducationalSection();
+    });
+    
+    document.getElementById('needType')?.addEventListener('change', function() {
+        updateEducationalSection();
+    });
+    
+    function updateEducationalSection() {
+        const isStudent = document.getElementById('isStudent')?.checked;
+        const needType = document.getElementById('needType')?.value;
+        document.getElementById('educationalSection').style.display = 
+            (isStudent && needType === 'educational') ? 'block' : 'none';
+    }
+    
+    document.getElementById('requestForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            citizenName: document.getElementById('citizenName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            location: {
+                address: document.getElementById('address').value,
+                coordinates: { lat: 40.7128, lng: -74.0060 }
+            },
+            needType: document.getElementById('needType').value,
+            severity: document.getElementById('severity').value,
+            peopleAffected: parseInt(document.getElementById('peopleAffected').value),
+            description: document.getElementById('description').value,
+            vulnerabilityGroup: selectedVulnerabilities.length > 0 ? selectedVulnerabilities : ['none'],
+            specialCircumstances: document.getElementById('specialCircumstances').value,
+            isStudent: document.getElementById('isStudent')?.checked || false,
+            hasEvidence: false
+        };
+        
+        // Add educational needs if applicable
+        if (formData.isStudent && formData.needType === 'educational') {
+            formData.educationalNeeds = {
+                type: document.getElementById('educationalNeedType').value,
+                details: document.getElementById('educationalDetails').value
+            };
+        }
+        
+        try {
+            const response = await fetch('/api/requests', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                alert('Request submitted successfully! Redirecting to dashboard...');
+                window.location.href = '/citizen/dashboard';
+            } else {
+                alert('Error submitting request. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error submitting request. Please try again.');
+        }
+    });
+</script>
+{% endblock %}

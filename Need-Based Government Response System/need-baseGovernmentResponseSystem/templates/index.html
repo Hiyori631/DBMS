@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+
+{% block title %}PeopleFirst Priority - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Background Image -->
+<div class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Background Image Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-[#33272a] via-[#594a4e] to-[#33272a]">
+        <img 
+            src="{{ url_for('static', filename='image/house.jpg') }}" 
+            alt="Government services and community support"
+            class="w-full h-full object-cover opacity-20"
+            onerror="this.src='https://images.unsplash.com/photo-1541872703-74c5e44368f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1920'"
+        />
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="relative z-10 text-center text-white px-4">
+        <div class="inline-block mb-6">
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            Intelligent Government Assistance
+            <br>
+            <span class="block mt-4 text-[#ffc6c7]">PeopleFirst Priority</span>
+        </h1>
+        <div class="w-32 h-1 bg-gradient-to-r from-transparent via-[#ff8ba7] to-transparent mx-auto mb-8"></div>
+        <p class="text-lg md:text-xl max-w-4xl mx-auto font-light text-white/90 leading-relaxed">
+            Connecting citizens directly with government assistance programs through intelligent prioritization based on severity, urgency, and impact. Available anytime for any need - from emergencies to ongoing support.
+        </p>
+    </div>
+    
+    <!-- Scroll Down Indicator -->
+    <a href="#content" class="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-10 text-center cursor-pointer hover:opacity-80 transition-opacity">
+        <div class="animate-bounce">
+            <p class="text-white/80 text-xs tracking-widest mb-2 font-bold">SCROLL DOWN</p>
+            <svg class="w-6 h-6 mx-auto text-[#ff8ba7]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </div>
+    </a>
+</div>
+
+<!-- Content Section -->
+<div id="content" class="bg-[#faeee7] py-20">
+    <div class="max-w-7xl mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4 text-[#33272a]">Access Government Services</h2>
+            <p class="text-lg text-[#594a4e] max-w-2xl mx-auto">Select your role to access the appropriate portal</p>
+        </div>
+        
+        <!-- Role Selection -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+            <!-- Citizen Portal -->
+            <a href="/citizen/login" class="group bg-white rounded-2xl shadow-lg p-10 text-left hover:shadow-2xl transition-all hover:-translate-y-2 block border-l-8 border-[#ff8ba7]">
+                <div class="flex items-start justify-between mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-[#ff8ba7] to-[#ffc6c7] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                        <i data-lucide="users" class="w-10 h-10 text-white"></i>
+                    </div>
+                    <div class="p-2 bg-[#ff8ba7]/10 rounded-lg">
+                        <i data-lucide="arrow-right" class="w-6 h-6 text-[#ff8ba7] group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 text-[#33272a]">Citizen Portal</h2>
+                <p class="text-[#594a4e] mb-6 leading-relaxed">
+                    Submit assistance requests for any need, track your submissions, and receive real-time updates
+                    on government response - available 24/7 for emergencies and ongoing support.
+                </p>
+                <div class="flex items-center gap-2 text-[#ff8ba7] font-bold group-hover:gap-3 transition-all">
+                    <span>Enter as Citizen</span>
+                    <div class="w-2 h-2 rounded-full bg-[#ff8ba7]"></div>
+                </div>
+            </a>
+
+            <!-- Government Portal -->
+            <a href="/government/login" class="group bg-white rounded-2xl shadow-lg p-10 text-left hover:shadow-2xl transition-all hover:-translate-y-2 block border-l-8 border-[#33272a]">
+                <div class="flex items-start justify-between mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-[#33272a] to-[#594a4e] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                        <i data-lucide="shield-check" class="w-10 h-10 text-white"></i>
+                    </div>
+                    <div class="p-2 bg-[#33272a]/10 rounded-lg">
+                        <i data-lucide="arrow-right" class="w-6 h-6 text-[#33272a] group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 text-[#33272a]">Government Dashboard</h2>
+                <p class="text-[#594a4e] mb-6 leading-relaxed">
+                    Access prioritized assistance requests, manage response operations, and track
+                    performance metrics with real-time analytics across all service areas.
+                </p>
+                <div class="flex items-center gap-2 text-[#33272a] font-bold group-hover:gap-3 transition-all">
+                    <span>Enter as Official</span>
+                    <div class="w-2 h-2 rounded-full bg-[#33272a]"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+    <!-- Features Section -->
+    <div class="bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <div class="p-3 bg-[#33272a] rounded-xl">
+                        <i data-lucide="info" class="w-8 h-8 text-white"></i>
+                    </div>
+                </div>
+                <h2 class="text-4xl font-bold mb-4 text-[#33272a]">How It Works</h2>
+                <p class="text-lg text-[#594a4e] max-w-2xl mx-auto leading-relaxed">
+                    Our intelligent system ensures fair, efficient, and transparent delivery
+                    of government assistance to those who need it most, whenever they need it.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6 rounded-xl hover:bg-[#faeee7] transition-colors">
+                    <div class="relative inline-block mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-[#ff8ba7] to-[#ffc6c7] rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                            <span class="text-3xl font-bold text-white">1</span>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-[#33272a] rounded-full flex items-center justify-center">
+                            <i data-lucide="file-text" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-[#33272a]">Submit Request</h3>
+                    <p class="text-[#594a4e] leading-relaxed">
+                        Citizens report their specific needs with details about severity and urgency.
+                    </p>
+                </div>
+
+                <div class="text-center p-6 rounded-xl hover:bg-[#faeee7] transition-colors">
+                    <div class="relative inline-block mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-[#33272a] to-[#594a4e] rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                            <span class="text-3xl font-bold text-white">2</span>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-[#ff8ba7] rounded-full flex items-center justify-center">
+                            <i data-lucide="zap" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-[#33272a]">Auto-Prioritize</h3>
+                    <p class="text-[#594a4e] leading-relaxed">
+                        Algorithm ranks requests by severity, vulnerability, and impact.
+                    </p>
+                </div>
+
+                <div class="text-center p-6 rounded-xl hover:bg-[#faeee7] transition-colors">
+                    <div class="relative inline-block mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-[#c3f0ca] to-[#c3f0ca]/70 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                            <span class="text-3xl font-bold text-[#33272a]">3</span>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-[#33272a] rounded-full flex items-center justify-center">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-[#33272a]">Government Response</h3>
+                    <p class="text-[#594a4e] leading-relaxed">
+                        Officials allocate resources to highest-priority needs first.
+                    </p>
+                </div>
+
+                <div class="text-center p-6 rounded-xl hover:bg-[#faeee7] transition-colors">
+                    <div class="relative inline-block mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-[#ffc6c7] to-[#ff8ba7] rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                            <span class="text-3xl font-bold text-white">4</span>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-[#33272a] rounded-full flex items-center justify-center">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-[#33272a]">Track & Verify</h3>
+                    <p class="text-[#594a4e] leading-relaxed">
+                        Real-time tracking and community verification ensure accountability.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Preview -->
+    <div class="bg-gradient-to-r from-[#33272a] via-[#594a4e] to-[#33272a] py-16 text-white relative overflow-hidden">
+        <!-- Decorative Elements -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-64 h-64 bg-[#ff8ba7] rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-64 h-64 bg-[#ffc6c7] rounded-full translate-x-1/2 translate-y-1/2 blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-3">System Performance</h2>
+                <p class="text-white/80">Real-time government assistance metrics</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-colors">
+                    <div class="inline-block p-3 bg-[#ff8ba7] rounded-xl mb-4">
+                        <i data-lucide="inbox" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div class="text-4xl font-bold mb-2">{{ stats.totalRequests }}</div>
+                    <p class="text-white/80 font-semibold">Total Requests</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-colors">
+                    <div class="inline-block p-3 bg-[#c3f0ca] rounded-xl mb-4">
+                        <i data-lucide="check-circle" class="w-6 h-6 text-[#33272a]"></i>
+                    </div>
+                    <div class="text-4xl font-bold mb-2">{{ stats.completed }}</div>
+                    <p class="text-white/80 font-semibold">Completed</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-colors">
+                    <div class="inline-block p-3 bg-[#ffc6c7] rounded-xl mb-4">
+                        <i data-lucide="clock" class="w-6 h-6 text-[#33272a]"></i>
+                    </div>
+                    <div class="text-4xl font-bold mb-2">{{ stats.avgResponseTime }}h</div>
+                    <p class="text-white/80 font-semibold">Avg Response Time</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-colors">
+                    <div class="inline-block p-3 bg-white/20 rounded-xl mb-4">
+                        <i data-lucide="graduation-cap" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div class="text-4xl font-bold mb-2">{{ stats.studentRequests }}</div>
+                    <p class="text-white/80 font-semibold">Student Requests</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="py-20 text-center bg-gradient-to-br from-[#faeee7] to-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white rounded-3xl shadow-2xl p-12 border-t-8 border-[#33272a]">
+             
+                <h2 class="text-4xl font-bold mb-4 text-[#33272a]">Ready to Get Started?</h2>
+                <p class="text-lg text-[#594a4e] mb-10 leading-relaxed max-w-2xl mx-auto">
+                    Choose your role to access the platform and see how PeopleFirst Priority
+                    is transforming government assistance delivery and citizen engagement.
+                </p>
+                <div class="flex gap-6 justify-center flex-wrap">
+                    <a href="/citizen/login" class="group px-10 py-5 bg-gradient-to-r from-[#ff8ba7] to-[#ffc6c7] text-white rounded-xl hover:shadow-2xl transition-all font-bold text-lg hover:-translate-y-1 flex items-center gap-3">
+                        <i data-lucide="user" class="w-6 h-6"></i>
+                        <span>I Need Assistance</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="/government/login" class="group px-10 py-5 bg-gradient-to-r from-[#33272a] to-[#594a4e] text-white rounded-xl hover:shadow-2xl transition-all font-bold text-lg hover:-translate-y-1 flex items-center gap-3">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        <span>I'm a Government Official</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+                
+                <!-- Trust Indicators -->
+                <div class="mt-12 pt-8 border-t-2 border-[#faeee7]">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                        <div class="flex items-center justify-center gap-2 text-[#594a4e]">
+                            <div class="p-2 bg-[#c3f0ca]/30 rounded-lg">
+                                <i data-lucide="shield" class="w-5 h-5 text-[#33272a]"></i>
+                            </div>
+                            <span class="font-semibold">Secure & Confidential</span>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 text-[#594a4e]">
+                            <div class="p-2 bg-[#ff8ba7]/20 rounded-lg">
+                                <i data-lucide="clock" class="w-5 h-5 text-[#ff8ba7]"></i>
+                            </div>
+                            <span class="font-semibold">24/7 Availability</span>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 text-[#594a4e]">
+                            <div class="p-2 bg-[#ffc6c7]/30 rounded-lg">
+                                <i data-lucide="zap" class="w-5 h-5 text-[#33272a]"></i>
+                            </div>
+                            <span class="font-semibold">Instant Priority Ranking</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

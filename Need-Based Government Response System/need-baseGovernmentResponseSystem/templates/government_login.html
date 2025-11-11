@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block title %}Government Login - PeopleFirst Priority{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-[#faeee7] flex items-center justify-center p-4">
+    <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <!-- Left Side - Image and Info -->
+        <div class="relative bg-[#33272a] p-12 flex flex-col justify-between text-white">
+            <div>
+                <a href="/" class="flex items-center gap-2 text-white/80 hover:text-white mb-8 transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Back to Home</span>
+                </a>
+                
+                <div class="mb-8">
+                    <div class="w-16 h-16 bg-[#ff8ba7] rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="shield" class="w-8 h-8 text-[#33272a]"></i>
+                    </div>
+                    <h2 class="mb-3">Government Dashboard</h2>
+                    <p class="text-[#ffc6c7]">
+                        Access prioritized assistance requests, manage response operations, and track
+                        performance metrics with real-time analytics.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span>✓</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-1">Priority Queue</p>
+                            <p class="text-purple-200 text-sm">
+                                View requests sorted by intelligent priority algorithm
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span>✓</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-1">Real-Time Analytics</p>
+                            <p class="text-purple-200 text-sm">
+                                Monitor performance metrics and response efficiency
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span>✓</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-1">Resource Management</p>
+                            <p class="text-purple-200 text-sm">
+                                Allocate resources to highest-priority needs efficiently
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <img 
+                    src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=500" 
+                    alt="Government operations"
+                    class="w-full h-48 object-cover rounded-lg opacity-80"
+                />
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="p-12">
+            <div class="mb-8">
+                <h2 class="mb-2 text-[#33272a]">Government Portal</h2>
+                <p class="text-[#594a4e]">Sign in to access operations dashboard</p>
+            </div>
+
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label class="block text-[#33272a] mb-2 font-semibold">Full Name</label>
+                    <div class="relative">
+                        <i data-lucide="user" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#594a4e]"></i>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            class="w-full pl-11 pr-4 py-3 border-2 border-[#ffc6c7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                            placeholder="Enter your full name"
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[#33272a] mb-2 font-semibold">Email Address</label>
+                    <div class="relative">
+                        <i data-lucide="mail" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#594a4e]"></i>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            class="w-full pl-11 pr-4 py-3 border-2 border-[#ffc6c7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                            placeholder="official.email@gov.example"
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[#33272a] mb-2 font-semibold">Official ID</label>
+                    <div class="relative">
+                        <i data-lucide="id-card" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#594a4e]"></i>
+                        <input
+                            type="text"
+                            id="officialId"
+                            name="officialId"
+                            required
+                            class="w-full pl-11 pr-4 py-3 border-2 border-[#ffc6c7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                            placeholder="GOV-12345"
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[#33272a] mb-2 font-semibold">Department</label>
+                    <div class="relative">
+                        <i data-lucide="building" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#594a4e]"></i>
+                        <select
+                            id="department"
+                            name="department"
+                            required
+                            class="w-full pl-11 pr-4 py-3 border-2 border-[#ffc6c7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                        >
+                            <option value="">Select Department</option>
+                           <option value="Social Services">Social Services</option>
+                           <option value="Infrastructure & Housing">Infrastructure & Housing</option>
+                            <option value="Emergency Services">Emergency Services</option>
+                            <option value="Relief Operations">Relief Operations</option>
+                            <option value="Health and Medical Services">Health and Medical Services</option>
+                            <option value="Educational Support">Educational Support</option>
+                            <option value="Financial Assistance">Financial Assistance</option>
+                            <option value="Administration">Administration</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[#33272a] mb-2 font-semibold">Password</label>
+                    <div class="relative">
+                        <i data-lucide="lock" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#594a4e]"></i>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            required
+                            class="w-full pl-11 pr-4 py-3 border-2 border-[#ffc6c7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff8ba7] focus:border-[#ff8ba7]"
+                            placeholder="Enter your password"
+                        />
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full py-3 bg-[#ff8ba7] text-[#33272a] font-semibold rounded-lg hover:bg-[#ffc6c7] transition-colors"
+                >
+                    Access Dashboard
+                </button>
+            </form>
+
+            <div class="mt-8 p-4 bg-[#faeee7] rounded-lg border-2 border-[#ffc6c7]">
+                <p class="text-sm text-[#33272a]">
+                    <strong>Authorized Access Only:</strong> This portal is for government officials only.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const name = document.getElementById('name').value;
+        const officialId = document.getElementById('officialId').value;
+        const department = document.getElementById('department').value;
+        
+        if (!department) {
+            alert('Please select a department');
+            return;
+        }
+        
+        if (!officialId) {
+            alert('Please enter your Official ID');
+            return;
+        }
+        
+        try {
+            // Determine role based on department selection
+            const role = department === 'Administration' ? 'admin' : 'government';
+            
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    role: role,
+                    email: email,
+                    name: name,
+                    officialId: officialId,
+                    department: department
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Redirect to admin dashboard if Administration department
+                if (department === 'Administration') {
+                    window.location.href = '/admin/dashboard';
+                } else {
+                    window.location.href = '/government/dashboard';
+                }
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('Login failed. Please try again.');
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,555 @@
+{% extends "base.html" %}
+
+{% block title %}Government Dashboard - Operations Center{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Top Bar -->
+<div class="bg-[#33272a] text-white py-3 px-4 shadow-md">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="p-2 bg-[#ff8ba7] rounded-lg">
+                <i data-lucide="shield" class="w-5 h-5 text-[#33272a]"></i>
+            </div>
+            <div>
+                <span class="font-semibold">{{ user_name }}</span>
+                <span class="text-[#ffc6c7] text-sm ml-2">{{ user_department }}</span>
+            </div>
+        </div>
+        <button onclick="logout()" class="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors border border-white/20 font-medium">
+            Logout
+        </button>
+    </div>
+</div>
+
+<div class="min-h-screen bg-[#faeee7]">
+    <!-- Header -->
+    <div class="bg-white border-b-2 border-[#33272a]">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 bg-[#33272a] rounded-lg flex items-center justify-center text-2xl">
+                    🏛️
+                </div>
+                <h1 class="text-[#33272a] text-3xl font-bold">Government Relief Operations Dashboard</h1>
+            </div>
+            <p class="text-[#594a4e] ml-15">Real-time monitoring and response coordination</p>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-[#33272a] hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="p-3 bg-[#faeee7] rounded-lg">
+                        <i data-lucide="package" class="w-6 h-6 text-[#33272a]"></i>
+                    </div>
+                    <span class="text-4xl font-bold text-[#33272a]">{{ stats.totalRequests }}</span>
+                </div>
+                <p class="text-[#594a4e] font-medium">Total Requests</p>
+                <p class="text-xs text-[#594a4e] mt-1 opacity-75">All submissions</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-[#ff8ba7] hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="p-3 bg-[#ffc6c7]/20 rounded-lg">
+                        <i data-lucide="clock" class="w-6 h-6 text-[#ff8ba7]"></i>
+                    </div>
+                    <span class="text-4xl font-bold text-[#33272a]">{{ stats.pending }}</span>
+                </div>
+                <p class="text-[#594a4e] font-medium">Pending Review</p>
+                <p class="text-xs text-[#ff8ba7] mt-1 font-medium">Requires attention</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-[#ff8ba7] hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="p-3 bg-[#ff8ba7]/20 rounded-lg">
+                        <i data-lucide="alert-triangle" class="w-6 h-6 text-[#ff8ba7]"></i>
+                    </div>
+                    <span class="text-4xl font-bold text-[#ff8ba7]">{{ stats.criticalRequests }}</span>
+                </div>
+                <p class="text-[#594a4e] font-medium">Critical Priority</p>
+                <p class="text-xs text-[#ff8ba7] mt-1 font-medium">Urgent action needed</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-[#c3f0ca] hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="p-3 bg-[#c3f0ca]/30 rounded-lg">
+                        <i data-lucide="check-circle" class="w-6 h-6 text-[#33272a]"></i>
+                    </div>
+                    <span class="text-4xl font-bold text-[#33272a]">{{ stats.completed }}</span>
+                </div>
+                <p class="text-[#594a4e] font-medium">Completed</p>
+                <p class="text-xs text-[#594a4e] mt-1 opacity-75">Successfully resolved</p>
+            </div>
+        </div>
+
+        <!-- Additional Stats Row -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-[#ffc6c7]/30">
+                <div class="flex items-center gap-4">
+                    <div class="p-4 bg-[#33272a] rounded-xl">
+                        <i data-lucide="users" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-3xl font-bold text-[#33272a]">{{ stats.studentRequests }}</p>
+                        <p class="text-[#594a4e] font-medium mt-1">Student Requests</p>
+                        <p class="text-xs text-[#594a4e] mt-1 opacity-75">Educational needs prioritized</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-[#ffc6c7]/30">
+                <div class="flex items-center gap-4">
+                    <div class="p-4 bg-[#33272a] rounded-xl">
+                        <i data-lucide="trending-up" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-3xl font-bold text-[#33272a]">{{ stats.avgResponseTime }}h</p>
+                        <p class="text-[#594a4e] font-medium mt-1">Avg Response Time</p>
+                        <p class="text-xs text-[#594a4e] mt-1 opacity-75">Target: &lt;6 hours</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-[#ffc6c7]/30">
+                <div class="flex items-center gap-4">
+                    <div class="p-4 bg-[#33272a] rounded-xl">
+                        <i data-lucide="package" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-3xl font-bold text-[#33272a]">{{ stats.inProgress }}</p>
+                        <p class="text-[#594a4e] font-medium mt-1">Active Responses</p>
+                        <p class="text-xs text-[#594a4e] mt-1 opacity-75">Teams deployed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Tabs and Filters -->
+        <div class="bg-white rounded-xl shadow-sm mb-6 overflow-hidden">
+            <div class="border-b-2 border-[#33272a]/10">
+                <div class="flex">
+                    <button onclick="switchView('queue')" id="queueTab"
+                        class="flex items-center gap-2 px-8 py-4 border-b-3 border-[#33272a] text-[#33272a] transition-colors font-semibold bg-[#faeee7]">
+                        <i data-lucide="package" class="w-5 h-5"></i>
+                        Priority Queue
+                    </button>
+                    <button onclick="switchView('analytics')" id="analyticsTab"
+                        class="flex items-center gap-2 px-8 py-4 border-b-3 border-transparent text-[#594a4e] hover:text-[#33272a] hover:bg-[#faeee7] transition-colors font-medium">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                        Analytics
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="p-6 bg-gradient-to-br from-[#faeee7] to-white">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="p-2 bg-[#33272a] rounded-lg">
+                        <i data-lucide="filter" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <h3 class="text-[#33272a] font-bold text-lg">Filter Requests</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold text-sm">Status</label>
+                        <select id="filterStatus" onchange="applyFilters()"
+                            class="w-full px-4 py-2.5 border-2 border-[#33272a]/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#33272a] focus:border-transparent bg-white text-[#33272a] font-medium">
+                            <option value="all">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold text-sm">Severity</label>
+                        <select id="filterSeverity" onchange="applyFilters()"
+                            class="w-full px-4 py-2.5 border-2 border-[#33272a]/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#33272a] focus:border-transparent bg-white text-[#33272a] font-medium">
+                            <option value="all">All Severities</option>
+                            <option value="critical">Critical</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[#33272a] mb-2 font-semibold text-sm">Need Type</label>
+                        <select id="filterNeedType" onchange="applyFilters()"
+                            class="w-full px-4 py-2.5 border-2 border-[#33272a]/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#33272a] focus:border-transparent bg-white text-[#33272a] font-medium">
+                            <option value="all">All Types</option>
+                            <option value="food">Food</option>
+                            <option value="shelter">Shelter</option>
+                            <option value="medical">Medical</option>
+                            <option value="water">Water</option>
+                            <option value="educational">Educational</option>
+                            <option value="mental-health">Mental Health</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-6">
+                <!-- Queue View -->
+                <div id="queueView">
+                    <div class="mb-6 flex items-center justify-between">
+                        <p class="text-[#594a4e] font-medium">
+                            Showing <span id="requestCount" class="font-bold text-[#33272a]">0</span> requests <span class="text-xs opacity-75">(sorted by priority)</span>
+                        </p>
+                    </div>
+                    <div id="requestsList" class="space-y-4"></div>
+                </div>
+
+                <!-- Analytics View -->
+                <div id="analyticsView" style="display: none;">
+                    <div class="space-y-8">
+                        <!-- Charts Row -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="bg-white p-6 rounded-xl border border-[#33272a]/10">
+                                <h3 class="mb-6 text-[#33272a] font-bold text-lg">Requests by Need Type</h3>
+                                <canvas id="needTypeChart"></canvas>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl border border-[#33272a]/10">
+                                <h3 class="mb-6 text-[#33272a] font-bold text-lg">Severity Distribution</h3>
+                                <canvas id="severityChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Performance Metrics -->
+                        <div>
+                            <h3 class="mb-6 text-[#33272a] font-bold text-xl">Performance Metrics</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="bg-white border-2 border-[#c3f0ca] rounded-xl p-6">
+                                    <div class="flex items-center gap-4 mb-3">
+                                        <div class="p-3 bg-[#c3f0ca] rounded-lg">
+                                            <i data-lucide="check-circle-2" class="w-6 h-6 text-[#33272a]"></i>
+                                        </div>
+                                        <p class="text-[#594a4e] font-semibold">Completion Rate</p>
+                                    </div>
+                                    <p class="text-5xl font-bold text-[#33272a]" id="completionRate">0%</p>
+                                </div>
+                                <div class="bg-white border-2 border-[#33272a] rounded-xl p-6">
+                                    <div class="flex items-center gap-4 mb-3">
+                                        <div class="p-3 bg-[#33272a] rounded-lg">
+                                            <i data-lucide="target" class="w-6 h-6 text-white"></i>
+                                        </div>
+                                        <p class="text-[#594a4e] font-semibold">Avg Priority Score</p>
+                                    </div>
+                                    <p class="text-5xl font-bold text-[#33272a]" id="avgPriority">0</p>
+                                </div>
+                                <div class="bg-white border-2 border-[#ff8ba7] rounded-xl p-6">
+                                    <div class="flex items-center gap-4 mb-3">
+                                        <div class="p-3 bg-[#ff8ba7] rounded-lg">
+                                            <i data-lucide="users-2" class="w-6 h-6 text-white"></i>
+                                        </div>
+                                        <p class="text-[#594a4e] font-semibold">People Helped</p>
+                                    </div>
+                                    <p class="text-5xl font-bold text-[#33272a]" id="peopleHelped">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let allRequests = [];
+    let currentView = 'queue';
+    
+    function logout() {
+        fetch('/api/logout', { method: 'POST' }).then(() => {
+            window.location.href = '/';
+        });
+    }
+    
+    function switchView(view) {
+        currentView = view;
+        
+        document.getElementById('queueView').style.display = view === 'queue' ? 'block' : 'none';
+        document.getElementById('analyticsView').style.display = view === 'analytics' ? 'block' : 'none';
+        
+        document.getElementById('queueTab').className = view === 'queue' 
+            ? 'flex items-center gap-2 px-8 py-4 border-b-3 border-[#33272a] text-[#33272a] transition-colors font-semibold bg-[#faeee7]'
+            : 'flex items-center gap-2 px-8 py-4 border-b-3 border-transparent text-[#594a4e] hover:text-[#33272a] hover:bg-[#faeee7] transition-colors font-medium';
+        
+        document.getElementById('analyticsTab').className = view === 'analytics'
+            ? 'flex items-center gap-2 px-8 py-4 border-b-3 border-[#33272a] text-[#33272a] transition-colors font-semibold bg-[#faeee7]'
+            : 'flex items-center gap-2 px-8 py-4 border-b-3 border-transparent text-[#594a4e] hover:text-[#33272a] hover:bg-[#faeee7] transition-colors font-medium';
+        
+        lucide.createIcons();
+        
+        if (view === 'analytics') {
+            renderAnalytics();
+        }
+    }
+    
+    function getStatusBadge(status) {
+        const badges = {
+            'pending': '<span class="px-3 py-1.5 bg-[#ffc6c7] text-[#33272a] rounded-lg text-sm font-semibold border border-[#ffc6c7]">⏳ Pending</span>',
+            'in-progress': '<span class="px-3 py-1.5 bg-[#33272a] text-white rounded-lg text-sm font-semibold">🚧 In Progress</span>',
+            'completed': '<span class="px-3 py-1.5 bg-[#c3f0ca] text-[#33272a] rounded-lg text-sm font-semibold border border-[#c3f0ca]">✅ Completed</span>'
+        };
+        return badges[status] || status;
+    }
+    
+    function getSeverityBadge(severity) {
+        const badges = {
+            'critical': '<span class="px-3 py-1.5 bg-[#ff8ba7] text-white rounded-lg text-sm font-bold">🔴 CRITICAL</span>',
+            'urgent': '<span class="px-3 py-1.5 bg-[#ff8ba7]/70 text-white rounded-lg text-sm font-semibold">🟠 Urgent</span>',
+            'moderate': '<span class="px-3 py-1.5 bg-white text-[#33272a] rounded-lg text-sm font-semibold border-2 border-[#33272a]">🟡 Moderate</span>',
+            'low': '<span class="px-3 py-1.5 bg-[#faeee7] text-[#33272a] rounded-lg text-sm font-medium border border-[#33272a]/20">🔵 Low</span>'
+        };
+        return badges[severity] || severity;
+    }
+    
+    function getNeedTypeLabel(needType) {
+        const labels = {
+            'food': '🍽️ Food',
+            'shelter': '🏠 Shelter',
+            'medical': '🏥 Medical',
+            'water': '💧 Water',
+            'educational': '📚 Educational',
+            'mental-health': '🧠 Mental Health',
+            'clothing': '👕 Clothing',
+            'financial': '💰 Financial',
+            'other': '📦 Other'
+        };
+        return labels[needType] || needType;
+    }
+    
+    async function updateStatus(requestId, newStatus) {
+        try {
+            const response = await fetch(`/api/requests/${requestId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: newStatus })
+            });
+            
+            if (response.ok) {
+                loadRequests();
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
+    }
+    
+    function renderRequest(request) {
+        const date = new Date(request.submittedAt).toLocaleString();
+        const vulnerabilities = request.vulnerabilityGroup
+            .filter(v => v !== 'none')
+            .map(v => `<span class="px-2.5 py-1 bg-[#ff8ba7]/10 text-[#33272a] rounded-md text-xs font-semibold border border-[#ff8ba7]/30">${v}</span>`)
+            .join(' ');
+        
+        return `
+            <div class="bg-white border-l-4 ${request.severity === 'critical' ? 'border-[#ff8ba7]' : 'border-[#33272a]'} rounded-xl p-6 hover:shadow-xl transition-all shadow-sm ${request.severity === 'critical' ? 'ring-2 ring-[#ff8ba7]/20' : ''}">
+                <div class="flex justify-between items-start mb-5">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-3">
+                            <h3 class="text-xl font-bold text-[#33272a]">Request #${request.id}</h3>
+                            ${request.isStudent ? '<span class="px-3 py-1 bg-[#33272a] text-white rounded-lg text-xs font-bold">🎓 STUDENT</span>' : ''}
+                        </div>
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            ${getStatusBadge(request.status)}
+                            ${getSeverityBadge(request.severity)}
+                            <span class="px-3 py-1.5 bg-[#faeee7] text-[#33272a] border border-[#33272a]/20 rounded-lg text-sm font-semibold">${getNeedTypeLabel(request.needType)}</span>
+                        </div>
+                        ${vulnerabilities ? `<div class="flex gap-2 flex-wrap mt-2">${vulnerabilities}</div>` : ''}
+                    </div>
+                    <div class="text-right ml-6 bg-gradient-to-br from-[#33272a] to-[#594a4e] p-6 rounded-xl text-white min-w-[120px]">
+                        <div class="text-5xl font-bold mb-1">
+                            ${request.priorityScore}
+                        </div>
+                        <div class="text-xs font-semibold opacity-90">PRIORITY</div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5 p-4 bg-[#faeee7] rounded-lg">
+                    <div class="text-sm"><span class="font-bold text-[#33272a]">Citizen:</span> <span class="text-[#594a4e]">${request.citizenName}</span></div>
+                    <div class="text-sm"><span class="font-bold text-[#33272a]">Phone:</span> <span class="text-[#594a4e]">${request.phone}</span></div>
+                    <div class="md:col-span-2 text-sm"><span class="font-bold text-[#33272a]">Location:</span> <span class="text-[#594a4e]">${request.location.address}</span></div>
+                    <div class="text-sm"><span class="font-bold text-[#33272a]">People Affected:</span> <span class="text-[#594a4e] font-semibold">${request.peopleAffected}</span></div>
+                    ${request.estimatedResponseTime ? `<div class="text-sm"><span class="font-bold text-[#33272a]">Est. Response:</span> <span class="text-[#594a4e]">${request.estimatedResponseTime}</span></div>` : ''}
+                </div>
+                
+                <div class="mb-4 p-4 bg-white border border-[#33272a]/10 rounded-lg">
+                    <p class="text-[#33272a] font-bold mb-2">Description:</p>
+                    <p class="text-[#594a4e] leading-relaxed">${request.description}</p>
+                </div>
+                
+                ${request.specialCircumstances ? `
+                    <div class="mb-4 p-4 bg-[#ffc6c7]/20 border-l-4 border-[#ff8ba7] rounded-lg">
+                        <p class="text-[#33272a] font-bold mb-2">⚠️ Special Circumstances:</p>
+                        <p class="text-[#594a4e]">${request.specialCircumstances}</p>
+                    </div>
+                ` : ''}
+                
+                ${request.educationalNeeds ? `
+                    <div class="mb-4 p-4 bg-[#33272a] text-white rounded-lg">
+                        <p class="font-bold mb-2">📚 Educational Need: ${request.educationalNeeds.type}</p>
+                        ${request.educationalNeeds.details ? `<p class="opacity-90">${request.educationalNeeds.details}</p>` : ''}
+                    </div>
+                ` : ''}
+                
+                <div class="flex gap-3 pt-5 border-t-2 border-[#33272a]/10">
+                    ${request.status === 'pending' ? `
+                        <button onclick="updateStatus('${request.id}', 'in-progress')"
+                            class="px-6 py-3 bg-[#33272a] text-white rounded-lg hover:bg-[#594a4e] transition-colors font-bold shadow-md">
+                            ▶ Start Processing
+                        </button>
+                    ` : ''}
+                    ${request.status === 'in-progress' ? `
+                        <button onclick="updateStatus('${request.id}', 'completed')"
+                            class="px-6 py-3 bg-[#c3f0ca] text-[#33272a] rounded-lg hover:bg-[#c3f0ca]/80 transition-colors font-bold shadow-md border-2 border-[#c3f0ca]">
+                            ✓ Mark Completed
+                        </button>
+                    ` : ''}
+                    <div class="flex-1 text-right text-sm text-[#594a4e]">
+                        <div class="font-semibold text-[#33272a]">Submitted: ${date}</div>
+                        ${request.assignedTo ? `<div class="mt-1">Assigned to: <span class="font-semibold">${request.assignedTo}</span></div>` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    function applyFilters() {
+        const statusFilter = document.getElementById('filterStatus').value;
+        const severityFilter = document.getElementById('filterSeverity').value;
+        const needTypeFilter = document.getElementById('filterNeedType').value;
+        
+        const filtered = allRequests.filter(req => {
+            if (statusFilter !== 'all' && req.status !== statusFilter) return false;
+            if (severityFilter !== 'all' && req.severity !== severityFilter) return false;
+            if (needTypeFilter !== 'all' && req.needType !== needTypeFilter) return false;
+            return true;
+        });
+        
+        document.getElementById('requestCount').textContent = filtered.length;
+        
+        if (filtered.length === 0) {
+            document.getElementById('requestsList').innerHTML = `
+                <div class="text-center py-16 bg-white rounded-xl border-2 border-dashed border-[#33272a]/20">
+                    <div class="p-4 bg-[#faeee7] rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                        <i data-lucide="inbox" class="w-10 h-10 text-[#594a4e]"></i>
+                    </div>
+                    <p class="text-[#33272a] font-bold text-lg mb-2">No requests found</p>
+                    <p class="text-[#594a4e]">No requests match the current filters</p>
+                </div>
+            `;
+        } else {
+            document.getElementById('requestsList').innerHTML = filtered.map(renderRequest).join('');
+        }
+        
+        lucide.createIcons();
+    }
+    
+    async function loadRequests() {
+        try {
+            const response = await fetch('/api/requests');
+            allRequests = await response.json();
+            applyFilters();
+        } catch (error) {
+            console.error('Error loading requests:', error);
+        }
+    }
+    
+    function renderAnalytics() {
+        // Need Type Chart
+        const needTypes = {};
+        allRequests.forEach(req => {
+            needTypes[req.needType] = (needTypes[req.needType] || 0) + 1;
+        });
+        
+        const needTypeCtx = document.getElementById('needTypeChart').getContext('2d');
+        new Chart(needTypeCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(needTypes),
+                datasets: [{
+                    label: 'Requests',
+                    data: Object.values(needTypes),
+                    backgroundColor: '#33272a',
+                    borderColor: '#33272a',
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        
+        // Severity Chart
+        const severities = { critical: 0, urgent: 0, moderate: 0, low: 0 };
+        allRequests.forEach(req => {
+            severities[req.severity]++;
+        });
+        
+        const severityCtx = document.getElementById('severityChart').getContext('2d');
+        new Chart(severityCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Critical', 'Urgent', 'Moderate', 'Low'],
+                datasets: [{
+                    data: [severities.critical, severities.urgent, severities.moderate, severities.low],
+                    backgroundColor: ['#ff8ba7', '#ffc6c7', '#faeee7', '#c3f0ca'],
+                    borderColor: '#33272a',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Performance Metrics
+        const completed = allRequests.filter(r => r.status === 'completed').length;
+        const completionRate = allRequests.length > 0 ? Math.round((completed / allRequests.length) * 100) : 0;
+        document.getElementById('completionRate').textContent = completionRate + '%';
+        
+        const avgPriority = allRequests.length > 0 
+            ? Math.round(allRequests.reduce((sum, r) => sum + r.priorityScore, 0) / allRequests.length)
+            : 0;
+        document.getElementById('avgPriority').textContent = avgPriority;
+        
+        const peopleHelped = allRequests
+            .filter(r => r.status === 'completed')
+            .reduce((sum, r) => sum + r.peopleAffected, 0);
+        document.getElementById('peopleHelped').textContent = peopleHelped;
+    }
+    
+    // Load requests on page load
+    loadRequests();
+    
+    // Refresh every 30 seconds
+    setInterval(loadRequests, 30000);
+</script>
+{% endblock %}

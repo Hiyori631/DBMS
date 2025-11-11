@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - PeopleFirst Priority{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative bg-gradient-to-br from-[#33272a] via-[#594a4e] to-[#33272a] py-20 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-[#ff8ba7] rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-[#ffc6c7] rounded-full translate-x-1/2 translate-y-1/2 blur-3xl"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 relative z-10">
+        <div class="text-center">
+            <div class="inline-block mb-6">
+                <div class="p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+                    <i data-lucide="mail" class="w-12 h-12 text-[#ff8ba7]"></i>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">Contact Us</h1>
+            <p class="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                We're here to help. Reach out to us for support, inquiries, or feedback
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div class="bg-[#faeee7] py-20">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid lg:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold mb-4 text-[#33272a]">Send us a Message</h2>
+                    <p class="text-[#594a4e]">Fill out the form below and we'll get back to you within 24 hours</p>
+                </div>
+
+                <form class="space-y-6" id="contactForm">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-[#33272a] mb-2">First Name *</label>
+                            <input type="text" required 
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ff8ba7] focus:outline-none transition-colors"
+                                   placeholder="John">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-[#33272a] mb-2">Last Name *</label>
+                            <input type="text" required
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ff8ba7] focus:outline-none transition-colors"
+                                   placeholder="Doe">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-[#33272a] mb-2">Email Address *</label>
+                        <input type="email" required
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ff8ba7] focus:outline-none transition-colors"
+                               placeholder="john.doe@example.com">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-[#33272a] mb-2">Phone Number</label>
+                        <input type="tel"
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ff8ba7] focus:outline-none transition-colors"
+                               placeholder="+1-555-0000">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-[#33272a] mb-2">Subject *</label>
+                        <select required
+                                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ff8ba7] focus:outline-none transition-colors">
+                            <option value="">Select a subject</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="request">Request Inquiry</option>
+                            <option value="account">Account Issues</option>
+                            <option value="feedback">Feedback & Suggestions</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-[#33272a] mb-2">Message *</label>
+                        <textarea required rows="5"
+                                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ff8ba7] focus:outline-none transition-colors resize-none"
+                                  placeholder="Tell us how we can help you..."></textarea>
+                    </div>
+
+                    <button type="submit"
+                            class="w-full px-8 py-4 bg-gradient-to-r from-[#ff8ba7] to-[#ffc6c7] text-white rounded-xl hover:shadow-lg transition-all font-bold text-lg flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="space-y-6">
+                <!-- Quick Contact Cards -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-[#ff8ba7]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-[#ff8ba7] to-[#ffc6c7] rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="phone" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 text-[#33272a]">Phone Support</h3>
+                            <p class="text-[#594a4e] mb-3">Available Monday - Friday, 8AM - 6PM</p>
+                            <a href="tel:+15551234567" class="text-[#ff8ba7] font-semibold hover:underline text-lg">
+                                +1 (555) 123-4567
+                            </a>
+                            <p class="text-sm text-[#594a4e] mt-2">Toll-free hotline for urgent assistance</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-[#33272a]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-[#33272a] to-[#594a4e] rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="mail" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 text-[#33272a]">Email Support</h3>
+                            <p class="text-[#594a4e] mb-3">Response within 24 hours</p>
+                            <a href="mailto:support@peoplefirstpriority.gov" class="text-[#33272a] font-semibold hover:underline text-lg">
+                                support@peoplefirstpriority.gov
+                            </a>
+                            <p class="text-sm text-[#594a4e] mt-2">For general inquiries and support</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-[#c3f0ca]">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-[#c3f0ca] to-[#c3f0ca]/70 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="map-pin" class="w-7 h-7 text-[#33272a]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 text-[#33272a]">Office Address</h3>
+                            <p class="text-[#594a4e] mb-3">Visit us during business hours</p>
+                            <p class="text-[#33272a] font-semibold">
+                                123 Government Plaza<br>
+                                City Hall Building, Floor 5<br>
+                                Capital City, ST 12345
+                            </p>
+                            <p class="text-sm text-[#594a4e] mt-3">
+                                <strong>Hours:</strong> Mon-Fri 9AM - 5PM
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact -->
+                <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-lg p-8 text-white">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0 border border-white/30">
+                            <i data-lucide="alert-triangle" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Emergency Assistance</h3>
+                            <p class="text-white/90 mb-3">For critical, life-threatening situations</p>
+                            <a href="tel:911" class="text-white font-bold hover:underline text-2xl">
+                                Call 911
+                            </a>
+                            <p class="text-sm text-white/80 mt-2">Available 24/7 for emergencies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Section -->
+<div class="bg-white py-20">
+    <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center mb-12">
+            <div class="inline-block mb-4">
+                <div class="p-3 bg-[#33272a] rounded-xl">
+                    <i data-lucide="help-circle" class="w-8 h-8 text-white"></i>
+                </div>
+            </div>
+            <h2 class="text-4xl font-bold mb-4 text-[#33272a]">Frequently Asked Questions</h2>
+            <p class="text-lg text-[#594a4e]">Quick answers to common questions</p>
+        </div>
+
+        <div class="space-y-4">
+            <div class="bg-[#faeee7] rounded-xl p-6 hover:shadow-md transition-shadow">
+                <h3 class="text-lg font-bold text-[#33272a] mb-2 flex items-start gap-2">
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-[#ff8ba7] mt-0.5 flex-shrink-0"></i>
+                    How do I submit an assistance request?
+                </h3>
+                <p class="text-[#594a4e] ml-7">
+                    Log into the Citizen Portal, click "Submit New Request," fill out the form with your needs, and submit. You'll receive a confirmation and tracking number immediately.
+                </p>
+            </div>
+
+            <div class="bg-[#faeee7] rounded-xl p-6 hover:shadow-md transition-shadow">
+                <h3 class="text-lg font-bold text-[#33272a] mb-2 flex items-start gap-2">
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-[#ff8ba7] mt-0.5 flex-shrink-0"></i>
+                    How long does it take to get a response?
+                </h3>
+                <p class="text-[#594a4e] ml-7">
+                    Response times vary based on severity. Critical requests are addressed within 2 hours, urgent within 6 hours, and standard requests within 24-48 hours.
+                </p>
+            </div>
+
+            <div class="bg-[#faeee7] rounded-xl p-6 hover:shadow-md transition-shadow">
+                <h3 class="text-lg font-bold text-[#33272a] mb-2 flex items-start gap-2">
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-[#ff8ba7] mt-0.5 flex-shrink-0"></i>
+                    Can I track my request status?
+                </h3>
+                <p class="text-[#594a4e] ml-7">
+                    Yes! Log into your Citizen Portal dashboard to view real-time updates on all your requests, including status changes and assigned personnel.
+                </p>
+            </div>
+
+            <div class="bg-[#faeee7] rounded-xl p-6 hover:shadow-md transition-shadow">
+                <h3 class="text-lg font-bold text-[#33272a] mb-2 flex items-start gap-2">
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-[#ff8ba7] mt-0.5 flex-shrink-0"></i>
+                    Is my personal information secure?
+                </h3>
+                <p class="text-[#594a4e] ml-7">
+                    Absolutely. We use bank-level encryption and follow strict government data protection protocols to ensure your information remains private and secure.
+                </p>
+            </div>
+
+            <div class="bg-[#faeee7] rounded-xl p-6 hover:shadow-md transition-shadow">
+                <h3 class="text-lg font-bold text-[#33272a] mb-2 flex items-start gap-2">
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-[#ff8ba7] mt-0.5 flex-shrink-0"></i>
+                    What if I don't have internet access?
+                </h3>
+                <p class="text-[#594a4e] ml-7">
+                    You can call our hotline at +1 (555) 123-4567 or visit our office in person. Our staff will help you submit your request.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Social Media & Additional Resources -->
+<div class="bg-[#faeee7] py-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <h3 class="text-2xl font-bold mb-6 text-[#33272a]">Connect With Us</h3>
+        <div class="flex justify-center gap-4 mb-8">
+            <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-[#33272a] hover:text-white transition-colors shadow-md">
+                <i data-lucide="facebook" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-[#33272a] hover:text-white transition-colors shadow-md">
+                <i data-lucide="twitter" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-[#33272a] hover:text-white transition-colors shadow-md">
+                <i data-lucide="linkedin" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-[#33272a] hover:text-white transition-colors shadow-md">
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+            </a>
+        </div>
+        <p class="text-[#594a4e]">Follow us for updates, tips, and community stories</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Contact form submission handler
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Show success message (you can replace this with actual form submission)
+        alert('Thank you for contacting us! We will get back to you within 24 hours.');
+        
+        // Reset form
+        this.reset();
+    });
+</script>
+{% endblock %}

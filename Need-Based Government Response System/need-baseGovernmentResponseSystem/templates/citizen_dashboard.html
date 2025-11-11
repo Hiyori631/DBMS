@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+
+{% block title %}My Requests - Citizen Dashboard{% endblock %}
+
+{% block content %}
+<!-- Top Bar -->
+<div class="bg-[#33272a] text-white py-2 px-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <span>Logged in as: {{ user_name }} ({{ user_email }})</span>
+        </div>
+        <button onclick="logout()" class="px-4 py-1 bg-[#ff8ba7] text-[#33272a] font-semibold rounded hover:bg-[#ffc6c7] transition-colors">
+            Logout
+        </button>
+    </div>
+</div>
+
+<div class="min-h-screen bg-[#faeee7]">
+    <!-- Header -->
+    <div class="bg-white border-b border-[#ffc6c7]">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                    <h1 class="mb-2 text-[#33272a]">👤 My Relief Requests</h1>
+                    <p class="text-[#594a4e]">Track your requests and submit new ones</p>
+                </div>
+                <a href="/citizen/submit-request" class="flex items-center gap-2 px-6 py-3 bg-[#ff8ba7] text-[#33272a] font-semibold rounded-lg hover:bg-[#ffc6c7] transition-colors">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                    Submit New Request
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <!-- Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-lg shadow p-6 stat-card border-2 border-transparent hover:border-[#ff8ba7]">
+                <div class="flex items-center justify-between mb-2">
+                    <i data-lucide="home" class="w-8 h-8 text-[#ff8ba7]"></i>
+                    <span class="text-3xl font-bold text-[#ff8ba7]" id="totalCount">0</span>
+                </div>
+                <p class="text-[#594a4e]">Total Requests</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 stat-card border-2 border-transparent hover:border-[#ffc6c7]">
+                <div class="flex items-center justify-between mb-2">
+                    <i data-lucide="clock" class="w-8 h-8 text-[#ffc6c7]"></i>
+                    <span class="text-3xl font-bold text-[#ffc6c7]" id="pendingCount">0</span>
+                </div>
+                <p class="text-[#594a4e]">Pending</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 stat-card border-2 border-transparent hover:border-[#ff8ba7]">
+                <div class="flex items-center justify-between mb-2">
+                    <i data-lucide="alert-circle" class="w-8 h-8 text-[#ff8ba7]"></i>
+                    <span class="text-3xl font-bold text-[#ff8ba7]" id="inProgressCount">0</span>
+                </div>
+                <p class="text-[#594a4e]">In Progress</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 stat-card border-2 border-transparent hover:border-[#c3f0ca]">
+                <div class="flex items-center justify-between mb-2">
+                    <i data-lucide="check-circle" class="w-8 h-8 text-[#c3f0ca]"></i>
+                    <span class="text-3xl font-bold text-[#33272a]" id="completedCount">0</span>
+                </div>
+                <p class="text-[#594a4e]">Completed</p>
+            </div>
+        </div>
+
+        <!-- No Requests State -->
+        <div id="noRequestsState" class="bg-white rounded-lg shadow p-12 text-center" style="display: none;">
+            <div class="max-w-md mx-auto">
+                <div class="w-16 h-16 bg-[#ffc6c7] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="plus" class="w-8 h-8 text-[#33272a]"></i>
+                </div>
+                <h3 class="mb-2 text-[#33272a]">No Requests Yet</h3>
+                <p class="text-[#594a4e] mb-6">
+                    You haven't submitted any relief requests. If you need assistance,
+                    click the button below to submit your first request.
+                </p>
+                <a href="/citizen/submit-request" class="inline-block px-6 py-3 bg-[#ff8ba7] text-[#33272a] font-semibold rounded-lg hover:bg-[#ffc6c7] transition-colors">
+                    Submit Your First Request
+                </a>
+            </div>
+        </div>
+
+        <!-- Requests List -->
+        <div id="requestsList">
+            <!-- Pending Requests -->
+            <div id="pendingSection" style="display: none;">
+                <div class="flex items-center gap-2 mb-4">
+                    <i data-lucide="clock" class="w-6 h-6 text-[#ffc6c7]"></i>
+                    <h2 class="text-[#33272a]">Pending Review (<span id="pendingCountText">0</span>)</h2>
+                </div>
+                <div id="pendingRequests" class="space-y-4 mb-8"></div>
+            </div>
+
+            <!-- In Progress Requests -->
+            <div id="inProgressSection" style="display: none;">
+                <div class="flex items-center gap-2 mb-4">
+                    <i data-lucide="alert-circle" class="w-6 h-6 text-[#ff8ba7]"></i>
+                    <h2 class="text-[#33272a]">In Progress (<span id="inProgressCountText">0</span>)</h2>
+                </div>
+                <div id="inProgressRequests" class="space-y-4 mb-4"></div>
+                <div class="p-4 bg-[#faeee7] rounded-lg border-2 border-[#ffc6c7] mb-8">
+                    <p class="text-[#33272a]">
+                        🚛 Relief teams are actively working on your requests. 
+                        You will be notified when they arrive at your location.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Completed Requests -->
+            <div id="completedSection" style="display: none;">
+                <div class="flex items-center gap-2 mb-4">
+                    <i data-lucide="check-circle" class="w-6 h-6 text-[#c3f0ca]"></i>
+                    <h2 class="text-[#33272a]">Completed (<span id="completedCountText">0</span>)</h2>
+                </div>
+                <div id="completedRequests" class="space-y-4 mb-8"></div>
+            </div>
+        </div>
+
+        <!-- Information Panel -->
+        <div id="infoPanel" class="bg-white rounded-lg shadow p-6 border-2 border-[#ffc6c7]" style="display: none;">
+            <h3 class="mb-4 text-[#33272a]">📋 How the System Works</h3>
+            <div class="space-y-3 text-[#594a4e]">
+                <div class="flex gap-3">
+                    <span class="flex-shrink-0">1️⃣</span>
+                    <p><strong>Submit Request:</strong> Fill out the form with your needs and situation.</p>
+                </div>
+                <div class="flex gap-3">
+                    <span class="flex-shrink-0">2️⃣</span>
+                    <p><strong>Automatic Prioritization:</strong> Our algorithm ranks your request based on severity, vulnerability, and urgency.</p>
+                </div>
+                <div class="flex gap-3">
+                    <span class="flex-shrink-0">3️⃣</span>
+                    <p><strong>Government Review:</strong> Officials see your request in their priority queue and allocate resources accordingly.</p>
+                </div>
+                <div class="flex gap-3">
+                    <span class="flex-shrink-0">4️⃣</span>
+                    <p><strong>Relief Delivery:</strong> Teams are dispatched to deliver assistance. You'll see status updates in real-time.</p>
+                </div>
+                <div class="flex gap-3">
+                    <span class="flex-shrink-0">5️⃣</span>
+                    <p><strong>Feedback:</strong> After receiving help, you can rate the response to improve future operations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const userEmail = "{{ user_email }}";
+    
+    async function logout() {
+        await fetch('/api/logout', { method: 'POST' });
+        window.location.href = '/';
+    }
+    
+    function getStatusBadge(status) {
+        const badges = {
+            'pending': '<span class="px-3 py-1 bg-[#ffc6c7] text-[#33272a] rounded-full text-sm font-semibold">⏳ Pending</span>',
+            'in-progress': '<span class="px-3 py-1 bg-[#ff8ba7] text-[#33272a] rounded-full text-sm font-semibold">🚧 In Progress</span>',
+            'completed': '<span class="px-3 py-1 bg-[#c3f0ca] text-[#33272a] rounded-full text-sm font-semibold">✅ Completed</span>'
+        };
+        return badges[status] || status;
+    }
+    
+    function getSeverityBadge(severity) {
+        const badges = {
+            'critical': '<span class="px-3 py-1 bg-[#ff8ba7] text-white rounded-full text-sm font-semibold">🔴 Critical</span>',
+            'urgent': '<span class="px-3 py-1 bg-[#ffc6c7] text-[#33272a] rounded-full text-sm font-semibold">🟠 Urgent</span>',
+            'moderate': '<span class="px-3 py-1 bg-[#faeee7] text-[#33272a] rounded-full text-sm font-semibold border border-[#ffc6c7]">🟡 Moderate</span>',
+            'low': '<span class="px-3 py-1 bg-[#c3f0ca] text-[#33272a] rounded-full text-sm font-semibold">🔵 Low</span>'
+        };
+        return badges[severity] || severity;
+    }
+    
+    function getNeedTypeLabel(needType) {
+        const labels = {
+            'food': '🍽️ Food',
+            'shelter': '🏠 Shelter',
+            'medical': '🏥 Medical',
+            'water': '💧 Water',
+            'educational': '📚 Educational',
+            'mental-health': '🧠 Mental Health',
+            'clothing': '👕 Clothing',
+            'financial': '💰 Financial',
+            'other': '📦 Other'
+        };
+        return labels[needType] || needType;
+    }
+    
+    function renderRequest(request) {
+        const date = new Date(request.submittedAt).toLocaleString();
+        
+        return `
+            <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Request #${request.id}</h3>
+                        <div class="flex gap-2 flex-wrap">
+                            ${getStatusBadge(request.status)}
+                            ${getSeverityBadge(request.severity)}
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">${getNeedTypeLabel(request.needType)}</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-blue-600 mb-1">${request.priorityScore}</div>
+                        <div class="text-xs text-gray-500">Priority Score</div>
+                    </div>
+                </div>
+                
+                <div class="space-y-2 mb-4">
+                    <p class="text-gray-700"><strong>Location:</strong> ${request.location.address}</p>
+                    <p class="text-gray-700"><strong>People Affected:</strong> ${request.peopleAffected}</p>
+                    <p class="text-gray-700"><strong>Description:</strong> ${request.description}</p>
+                    ${request.estimatedResponseTime ? `<p class="text-gray-700"><strong>Estimated Response:</strong> ${request.estimatedResponseTime}</p>` : ''}
+                    ${request.assignedTo ? `<p class="text-gray-700"><strong>Assigned To:</strong> ${request.assignedTo}</p>` : ''}
+                </div>
+                
+                <div class="text-sm text-gray-500 border-t pt-3">
+                    <p>Submitted: ${date}</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    async function loadRequests() {
+        try {
+            const response = await fetch(`/api/requests?email=${encodeURIComponent(userEmail)}`);
+            const requests = await response.json();
+            
+            const pending = requests.filter(r => r.status === 'pending');
+            const inProgress = requests.filter(r => r.status === 'in-progress');
+            const completed = requests.filter(r => r.status === 'completed');
+            
+            // Update counts
+            document.getElementById('totalCount').textContent = requests.length;
+            document.getElementById('pendingCount').textContent = pending.length;
+            document.getElementById('inProgressCount').textContent = inProgress.length;
+            document.getElementById('completedCount').textContent = completed.length;
+            
+            if (requests.length === 0) {
+                document.getElementById('noRequestsState').style.display = 'block';
+                document.getElementById('requestsList').style.display = 'none';
+                document.getElementById('infoPanel').style.display = 'none';
+            } else {
+                document.getElementById('noRequestsState').style.display = 'none';
+                document.getElementById('requestsList').style.display = 'block';
+                document.getElementById('infoPanel').style.display = 'block';
+                
+                // Render pending requests
+                if (pending.length > 0) {
+                    document.getElementById('pendingSection').style.display = 'block';
+                    document.getElementById('pendingCountText').textContent = pending.length;
+                    document.getElementById('pendingRequests').innerHTML = pending.map(renderRequest).join('');
+                }
+                
+                // Render in-progress requests
+                if (inProgress.length > 0) {
+                    document.getElementById('inProgressSection').style.display = 'block';
+                    document.getElementById('inProgressCountText').textContent = inProgress.length;
+                    document.getElementById('inProgressRequests').innerHTML = inProgress.map(renderRequest).join('');
+                }
+                
+                // Render completed requests
+                if (completed.length > 0) {
+                    document.getElementById('completedSection').style.display = 'block';
+                    document.getElementById('completedCountText').textContent = completed.length;
+                    document.getElementById('completedRequests').innerHTML = completed.map(renderRequest).join('');
+                }
+            }
+            
+            lucide.createIcons();
+        } catch (error) {
+            console.error('Error loading requests:', error);
+        }
+    }
+    
+    // Load requests on page load
+    loadRequests();
+    
+    // Refresh every 30 seconds
+    setInterval(loadRequests, 30000);
+</script>
+{% endblock %}

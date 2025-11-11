@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PeopleFirst Priority - Government Response System{% endblock %}</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        h1 { font-size: 2.25rem; font-weight: bold; }
+        h2 { font-size: 1.875rem; font-weight: bold; }
+        h3 { font-size: 1.5rem; font-weight: 600; }
+        
+        .stat-card { transition: transform 0.2s; }
+        .stat-card:hover { transform: translateY(-2px); }
+        
+        .btn-primary {
+            @apply px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors;
+        }
+        
+        .btn-secondary {
+            @apply px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors;
+        }
+    </style>
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo/Brand -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center gap-3 group">
+                        <div class="w-10 h-10 bg-gradient-to-br from-[#ff8ba7] to-[#ffc6c7] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-[#33272a] hidden sm:block">PeopleFirst Priority</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-[#33272a] hover:text-[#ff8ba7] font-semibold transition-colors relative group">
+                        Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#ff8ba7] group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="/about" class="text-[#33272a] hover:text-[#ff8ba7] font-semibold transition-colors relative group">
+                        About Us
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#ff8ba7] group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="/contact" class="text-[#33272a] hover:text-[#ff8ba7] font-semibold transition-colors relative group">
+                        Contact Us
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#ff8ba7] group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-[#33272a] hover:bg-[#faeee7] transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 py-4 space-y-3">
+                <a href="/" class="block px-4 py-2 text-[#33272a] hover:bg-[#faeee7] rounded-lg font-semibold transition-colors">
+                    Home
+                </a>
+                <a href="/about" class="block px-4 py-2 text-[#33272a] hover:bg-[#faeee7] rounded-lg font-semibold transition-colors">
+                    About Us
+                </a>
+                <a href="/contact" class="block px-4 py-2 text-[#33272a] hover:bg-[#faeee7] rounded-lg font-semibold transition-colors">
+                    Contact Us
+                </a>
+                <hr class="my-2 border-gray-200">
+                <a href="/citizen/login" class="block px-4 py-2 text-[#ff8ba7] border-2 border-[#ff8ba7] rounded-lg hover:bg-[#ff8ba7] hover:text-white transition-all font-semibold text-center">
+                    Citizen Login
+                </a>
+                <a href="/government/login" class="block px-4 py-2 bg-gradient-to-r from-[#33272a] to-[#594a4e] text-white rounded-lg hover:shadow-lg transition-all font-semibold text-center">
+                    Government Login
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Add padding to prevent content from being hidden under fixed navbar -->
+    <div class="pt-16">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+    
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
