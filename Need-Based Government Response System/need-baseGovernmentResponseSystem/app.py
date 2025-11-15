@@ -7,7 +7,7 @@ import bcrypt
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-in-production'
 
-# In-memory data storage (loaded from database)
+# In-memory data storage (loaded from database) 
 requests_db = []
 users_db = {
     'citizens': {},
